@@ -3,204 +3,677 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Mustafa Store</title>
+<title>Mustafa Store - متجر بطاقات الألعاب والشحن الإلكتروني</title>
+<!-- Font Awesome لأيقونات احترافية -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#050505,#1e3a8a);
-color:white;
-}
+  :root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+    --accent-color: #10b981;
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+  }
 
-header{
-text-align:center;
-padding:35px;
-}
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-.logo{
-font-size:42px;
-font-weight:bold;
-}
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding-bottom: 60px;
+  }
 
-.products{
-text-align:center;
-padding:20px;
-}
+  /* Header & Navigation */
+  header {
+    background: rgba(15, 23, 42, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #334155;
+  }
 
-.card{
-display:inline-block;
-vertical-align:top;
-width:260px;
-background:white;
-color:#111;
-margin:15px;
-padding:15px;
-border-radius:18px;
-box-shadow:0 0 15px #000;
-}
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+  }
 
-.card img{
-width:230px;
-height:150px;
-object-fit:cover;
-border-radius:12px;
-}
+  .logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-.price{
-color:green;
-font-size:20px;
-font-weight:bold;
-}
+  .logo i {
+    color: var(--primary-color);
+  }
 
-button{
-background:#2563eb;
-color:white;
-border:0;
-padding:12px 25px;
-border-radius:20px;
-cursor:pointer;
-}
+  .cart-icon-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
 
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px 20px;
-border-radius:50px;
-text-decoration:none;
-font-weight:bold;
-}
-select {
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-  width: 90%;
-}</style>
+  .cart-badge {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background: #ef4444;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  /* Hero Banner */
+  .hero {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.2) 0%, rgba(15, 23, 42, 0) 100%);
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  /* Search & Filter Section */
+  .controls {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border-radius: 25px;
+    border: 1px solid #334155;
+    background: var(--card-bg);
+    color: white;
+    outline: none;
+  }
+
+  .search-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+  }
+
+  .filter-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid #334155;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  /* Products Grid */
+  .products-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .price {
+    color: var(--accent-color);
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .btn-add-cart {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-add-cart:hover {
+    background: var(--primary-hover);
+  }
+
+  /* Cart Sidebar Drawer */
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    left: -400px;
+    width: 380px;
+    height: 100%;
+    background: #1e293b;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    z-index: 1000;
+    transition: 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer.open {
+    left: 0;
+  }
+
+  .cart-header {
+    padding: 20px;
+    background: #0f172a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+  }
+
+  .close-cart {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .cart-body {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    background: #0f172a;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .cart-item-details h4 {
+    font-size: 14px;
+  }
+
+  .cart-item-details p {
+    color: var(--accent-color);
+    font-size: 13px;
+  }
+
+  .cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cart-controls button {
+    background: #334155;
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .cart-footer {
+    padding: 20px;
+    background: #0f172a;
+    border-top: 1px solid #334155;
+  }
+
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .btn-checkout {
+    width: 100%;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-checkout:hover {
+    background: #1eb853;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+    display: none;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  /* Info & Payment Section */
+  .info-section {
+    max-width: 1200px;
+    margin: 50px auto 0;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .info-box {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #334155;
+    text-align: center;
+  }
+
+  .info-box i {
+    font-size: 35px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+
+  /* Floating Whatsapp Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-decoration: none;
+    z-index: 90;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #334155;
+    color: var(--text-muted);
+  }
+</style>
 </head>
 
 <body>
 
+<!-- Header -->
 <header>
-<div class="logo">🎮 Mustafa Store</div>
-<p>متجر بطاقات الألعاب والشحن الإلكتروني</p>
+  <div class="navbar">
+    <a href="#" class="logo">
+      <i class="fa-solid fa-gamepad"></i> Mustafa Store
+    </a>
+    <button class="cart-icon-btn" onclick="toggleCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
 </header>
 
-<section class="products">
-
-<h2>🔥 بطاقات الألعاب</h2>
-
-
-  <div class="card">
-<img src="https://cdn.cloudflare.steamstatic.com/steam/apps/578080/header.jpg">
-<h3>🎯 PUBG Mobile UC</h3>
-<p>شحن شدات ببجي موبايل</p>
-<div <select>
-  <option>60 UC - 3,000 جنيه</option>
-  <option>325 UC - 12,000 جنيه</option>
-  <option>660 UC - 22,000 جنيه</option>
-</select></div>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20شدات%20PUBG">
-<button>شراء الآن</button>
-</a>
-</div>
-
-<img src="https://upload.wikimedia.org/wikipedia/en/8/8e/Free_Fire_logo.svg" alt="Free Fire">
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/en/7/77/Free_Fire_Logo.png">
-<h3>🔥 Free Fire Diamonds</h3>
-<p>شحن جواهر فري فاير</p>
-<div class="price"><select>
-  <option>100 جوهرة - 5600 جنيه</option>
-  <option>310 جوهرة - 16800 جنيه</option>
-  <option>520 جوهرة  28000 جنيه</option>
-</select>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20جواهر%20Free%20Fire">
-<button>شراء الآن</button>
-</a>
-</div>
-
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/en/5/5b/Call_of_Duty_Modern_Warfare_II_Key_Art.jpg">
-<h3>🎮 Call of Duty Mobile</h3>
-<p>شحن CP كول أوف ديوتي</p>
-<div <select>
-  <option>80 CP - 3,000 جنيه</option>
-  <option>420 CP - 12,000 جنيه</option>
-  <option>880 CP - 25,000 جنيه</option>select {
-
-
-  
-</select></div>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20CP%20Call%20of%20Duty">
-<button>شراء الآن</button>
-</a>
-</div>
-
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Google_Play_Store_badge_EN.svg">
-<h3>🟦 Google Play</h3>
-<p>بطاقات ألعاب وتطبيقات</p>
-<div class="price">10,000 جنيه</div>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20بطاقة%20Google%20Play">
-<button>شراء الآن</button>
-</a>
-</div>
-
-  <div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Playstation_logo_colour.svg">
-<h3>🎮 PlayStation</h3>
-<p>بطاقات بلايستيشن للألعاب</p>
-<div class="price">15,000 جنيه</div>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20بطاقة%20PlayStation">
-<button>شراء الآن</button>
-</a>
-</div>
-
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_one_logo.svg">
-<h3>🟩 Xbox</h3>
-<p>بطاقات Xbox وألعاب</p>
-<div class="price">12,000 جنيه</div>
-<br>
-<a href="https://wa.me/249928895962?text=أريد%20شراء%20بطاقة%20Xbox">
-<button>شراء الآن</button>
-</a>
-</div>
-
+<!-- Hero Section -->
+<section class="hero">
+  <h1>متجر Mustafa Store الإلكتروني</h1>
+  <p>وجهتك الأولى لشراء بطاقات الألعاب والشحن الإلكتروني الفوري بأسعار ممتازة وأمان تام.</p>
 </section>
 
+<!-- Filter & Search Controls -->
+<div class="controls">
+  <div class="search-box">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="ابحث عن بطاقة أو لعبة...">
+  </div>
+  <div class="filter-btns">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">الكل</button>
+    <button class="filter-btn" onclick="filterCategory('google', this)">Google Play</button>
+    <button class="filter-btn" onclick="filterCategory('playstation', this)">PlayStation</button>
+    <button class="filter-btn" onclick="filterCategory('xbox', this)">Xbox</button>
+  </div>
+</div>
 
-<section style="text-align:center;padding:30px">
-<h2>عن Mustafa Store</h2>
-<p>
-متجر متخصص في بيع بطاقات الألعاب والشحن الإلكتروني بسرعة وسهولة.
-</p>
+<!-- Products Grid -->
+<main class="products-container" id="productsGrid">
+  <!-- Google Play -->
+  <div class="card" data-category="google" data-name="google play">
+    <img src="https://via.placeholder.com/260x160/111827/FFFFFF?text=Google+Play" alt="Google Play">
+    <h3>بطاقة Google Play</h3>
+    <p>بطاقة شحن رصيد لشراء التطبيقات والألعاب والخدمات.</p>
+    <div class="card-footer">
+      <div class="price">10,000 ج.س</div>
+      <button class="btn-add-cart" onclick="addToCart('Google Play', 10000)">
+        <i class="fa-solid fa-cart-plus"></i> إضافة
+      </button>
+    </div>
+  </div>
 
-<h2>طرق الدفع</h2>
-<p>
-للطلب والتواصل اضغط زر واتساب.
-</p>
+  <!-- PlayStation -->
+  <div class="card" data-category="playstation" data-name="playstation">
+    <img src="https://via.placeholder.com/260x160/003791/FFFFFF?text=PlayStation" alt="PlayStation">
+    <h3>بطاقة PlayStation</h3>
+    <p>شحن محفظة بلايستيشن لشراء الألعاب والاشتراكات.</p>
+    <div class="card-footer">
+      <div class="price">15,000 ج.س</div>
+      <button class="btn-add-cart" onclick="addToCart('PlayStation', 15000)">
+        <i class="fa-solid fa-cart-plus"></i> إضافة
+      </button>
+    </div>
+  </div>
+
+  <!-- Xbox -->
+  <div class="card" data-category="xbox" data-name="xbox">
+    <img src="https://via.placeholder.com/260x160/107C41/FFFFFF?text=Xbox" alt="Xbox">
+    <h3>بطاقة Xbox Game Pass</h3>
+    <p>بطاقة شحن وإعادة تعبئة لرصيد إكس بوكس والاشتراكات.</p>
+    <div class="card-footer">
+      <div class="price">12,000 ج.س</div>
+      <button class="btn-add-cart" onclick="addToCart('Xbox', 12000)">
+        <i class="fa-solid fa-cart-plus"></i> إضافة
+      </button>
+    </div>
+  </div>
+</main>
+
+<!-- Info Section -->
+<section class="info-section">
+  <div class="info-box">
+    <i class="fa-solid fa-bolt"></i>
+    <h3>تسليم سريع</h3>
+    <p>يتم تسليم الأكواد والبطاقات فور تأكيد عملية الدفع عبر الواتساب.</p>
+  </div>
+  <div class="info-box">
+    <i class="fa-solid fa-shield-halved"></i>
+    <h3>دفع آمن</h3>
+    <p>نوفر خيارات دفع متعددة وسهلة (تطبيقات البنوك والتحويل المباشر).</p>
+  </div>
+  <div class="info-box">
+    <i class="fa-solid fa-headset"></i>
+    <h3>دعم متواصل</h3>
+    <p>فريقنا جاهز للرد على استفساراتكم ومساعدتكم على مدار الساعة.</p>
+  </div>
 </section>
 
+<!-- Shopping Cart Drawer -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3><i class="fa-solid fa-cart-shopping"></i> سلة المشتريات</h3>
+    <button class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="cart-body" id="cartItemsContainer">
+    <!-- المنتجات المضافة ستظهر هنا ديناميكياً -->
+    <p style="text-align: center; color: var(--text-muted);" id="emptyCartMsg">السلة فارغة حالياً</p>
+  </div>
+  <div class="cart-footer">
+    <div class="total-price">
+      <span>الإجمالي:</span>
+      <span id="cartTotal">0 ج.س</span>
+    </div>
+    <button class="btn-checkout" onclick="checkoutWhatsApp()">
+      <i class="fa-brands fa-whatsapp"></i> إتمام الطلب عبر واتساب
+    </button>
+  </div>
+</div>
 
-<a class="whatsapp" 
-href="https://wa.me/249928895962?text=السلام%20عليكم%20أريد%20شراء%20بطاقة">
-واتساب 📱
+<!-- Floating Whatsapp -->
+<a href="https://wa.me/249928895962?text=السلام%20عليكم%20أريد%20الاستفسار%20عن%20البطاقات" class="whatsapp-float" target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
 </a>
 
+<footer>
+  <p>جميع الحقوق محفوظة &copy; 2026 - Mustafa Store</p>
+</footer>
+
+<!-- JavaScript Logic -->
+<script>
+  let cart = [];
+  const phoneNumber = "249928895962";
+
+  // فتح وإغلاق سلة التسوق
+  function toggleCart() {
+    document.getElementById('cartDrawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('active');
+  }
+
+  // إضافة منتج للسلة
+  function addToCart(name, price) {
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ name: name, price: price, quantity: 1 });
+    }
+    updateCartUI();
+    toggleCart(); // فتح السلة تلقائياً لرؤية المنتج
+  }
+
+  // تغيير الكميات
+  function changeQuantity(name, amount) {
+    const item = cart.find(item => item.name === name);
+    if (item) {
+      item.quantity += amount;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.name !== name);
+      }
+    }
+    updateCartUI();
+  }
+
+  // تحديث واجهة السلة والعداد
+  function updateCartUI() {
+    const cartContainer = document.getElementById('cartItemsContainer');
+    const badge = document.getElementById('cartBadge');
+    const totalElem = document.getElementById('cartTotal');
+
+    // تحديث العداد
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    badge.innerText = totalCount;
+
+    // حساب الإجمالي
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    totalElem.innerText = totalPrice.toLocaleString('ar-SD') + ' ج.س';
+
+    // تحديث قائمة المنتجات
+    if (cart.length === 0) {
+      cartContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted);">السلة فارغة حالياً</p>`;
+    } else {
+      cartContainer.innerHTML = '';
+      cart.forEach(item => {
+        cartContainer.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-details">
+              <h4>${item.name}</h4>
+              <p>${(item.price * item.quantity).toLocaleString('ar-SD')} ج.س</p>
+            </div>
+            <div class="cart-controls">
+              <button onclick="changeQuantity('${item.name}', -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="changeQuantity('${item.name}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+  }
+
+  // إرسال الطلب للواتساب
+  function checkoutWhatsApp() {
+    if (cart.length === 0) {
+      alert("سلة المشتريات فارغة!");
+      return;
+    }
+
+    let message = "مرحباً Mustafa Store 👋\nأريد طلب البطاقات التالية:\n\n";
+    let total = 0;
+
+    cart.forEach(item => {
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+      message += `▪️ *${item.name}* (الكمية: ${item.quantity}) - ${subtotal.toLocaleString('ar-SD')} ج.س\n`;
+    });
+
+    message += `\n💰 *الإجمالي الكلي:* ${total.toLocaleString('ar-SD')} جنيه سوداني`;
+    message += `\n\nأرجو تزويدي بتفاصيل الدفع وتحويل الكروت.`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+  }
+
+  // فلترة حسب التصنيف (Category)
+  function filterCategory(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      if (category === 'all' || card.dataset.category === category) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // البحث السريع
+  function filterProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      const name = card.dataset.name.toLowerCase();
+      if (name.includes(query)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
